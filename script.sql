@@ -32,6 +32,8 @@ VALUES
 (20, 'Galen', 'Erso', 55, '2020-06-14')
 ;
 
+DROP TABLE address;
+
 CREATE TABLE address (
     id INT PRIMARY KEY,
     address1 TEXT NOT NULL,
@@ -50,6 +52,8 @@ VALUES
 (05, '777 Heavenly Ln', 'Box 13', 'Pike City', 'MN', '50877')
 ;
 
+DROP TABLE contact;
+
 CREATE TABLE contact (
     id INT PRIMARY KEY,
     cellphone TEXT NOT NULL,
@@ -66,3 +70,24 @@ VALUES
 (05, '8880345966', '8888567987', 'james.betternot@hotmail.com'),
 (06, '3322827765', '3328760098', 'ralph.white264@aol.com')
 ;
+
+SELECT employee.fname, employee.lname, employee.age, address.city, address.state
+FROM employee
+INNER JOIN address ON employee.id = address.id
+WHERE employee.fname = 'Alan';
+
+SELECT employee.fname, employee.lname, employee.age, address.city, address.state, contact.email
+FROM employee
+INNER JOIN address ON employee.id = address.id
+INNER JOIN contact ON employee.id = contact.id
+WHERE contact.email = 'james.betternot@hotmail.com';
+
+UPDATE contact
+SET cellphone = '4383991212'
+WHERE id = (SELECT employee.id from employee where employee.fname = 'Susan' AND employee.lname = 'Shepard'); 
+
+SELECT *
+FROM employee
+INNER JOIN address ON employee.id = address.id
+INNER JOIN contact ON employee.id = contact.id
+WHERE employee.fname = 'Susan' AND employee.lname = 'Shepard';
